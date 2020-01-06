@@ -15,6 +15,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var managedObjectContext: NSManagedObjectContext? = nil
     
     var objects = [Any]()
+    var events: [Event] = []
 
 
     override func viewDidLoad() {
@@ -39,11 +40,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     func insertNewObject(_ sender: Any) {
         let context = self.fetchedResultsController.managedObjectContext
         let newEvent = Event(context: context)
-             
+        
+    
+        
         // If appropriate, configure the new managed object.
 
         newEvent.title = "Empty Note"
-
+//                 let indexPath = IndexPath(row: 0, section: 0)
+//
+//        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+            performSegue(withIdentifier: "showDetail", sender: self)
+        
         // Save the context.
         do {
             try context.save()
@@ -53,6 +60,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let nserror = error as NSError
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
+        print ("item added")
     }
 
     // MARK: - Segues
@@ -62,7 +70,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             if let indexPath = tableView.indexPathForSelectedRow {
             let object = fetchedResultsController.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object 
+                controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 detailViewController = controller

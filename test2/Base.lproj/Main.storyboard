@@ -42,6 +42,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textFieldChanged:" destination="JEX-9P-axG" eventType="editingChanged" id="T9c-2j-P1L"/>
+                                    <action selector="textFieldEndEdit:" destination="JEX-9P-axG" eventType="editingDidEnd" id="wf3-X4-SCB"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

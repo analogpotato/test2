@@ -36,13 +36,23 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureView()
+        
+
+        noteText.addTarget(self, action: #selector(self.textFieldChanged(_:)), for: UIControl.Event.editingChanged)
+       
     }
 
+    @IBAction func textFieldChanged(_ sender: Any) {
+        print(noteText.text!)
+    }
+    @IBAction func textFieldEndEdit(_ sender: Any) {
+        print("edit end")
+    }
     
     
     @IBAction func saveButton(_ sender: Any) {
         
-        
+
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -51,9 +61,17 @@ class DetailViewController: UIViewController {
             return
         }
 
-
+       
 
         location.title = noteText.text
+        
+        do {
+            try context.save()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+  
         
 //        ((self.splitViewController?.viewControllers.first as? UINavigationController)?.topViewController as? MasterViewController)?.insertNewObject(self)
         
