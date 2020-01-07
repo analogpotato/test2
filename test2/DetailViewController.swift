@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var noteText: UITextField!
     
+    var selectedEvent: Event? = nil
     
    
 
@@ -44,39 +45,69 @@ class DetailViewController: UIViewController {
 
     @IBAction func textFieldChanged(_ sender: Any) {
         print(noteText.text!)
+        
+        
+        
     }
     @IBAction func textFieldEndEdit(_ sender: Any) {
         print("edit end")
+        
+          guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
+                }
+                let context = appDelegate.persistentContainer.viewContext
+
+                
+                do {
+
+                    
+                    selectedEvent?.title = noteText.text
+                    
+                    do {
+                        try context.save()
+                    }
+                    
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
+        
     }
     
     
     @IBAction func saveButton(_ sender: Any) {
         
-
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let context = appDelegate.persistentContainer.viewContext
-        guard let location = NSEntityDescription.insertNewObject(forEntityName: "Event", into: context) as? Event else {
-            return
-        }
-
-       
-
-        location.title = noteText.text
-        
-        do {
-            try context.save()
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-  
-        
+//
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        let context = appDelegate.persistentContainer.viewContext
+////        guard let location = NSEntityDescription.insertNewObject(forEntityName: "Event", into: context) as? Event else {
+////            return
+////        }
+//
+//        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Event")
+//
+//
+//
+//
+////        location.title = noteText.text
+//
+//        do {
+////            try context.save()
+//            let test = try context.fetch(fetchRequest)
+//            let objectUpdate = test[0] as! NSManagedObject
+//            objectUpdate.setValue(noteText.text, forKey: "title")
+//            do {
+//                try context.save()
+//            }
+//
+//        } catch {
+//            let nserror = error as NSError
+//            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//        }
 //        ((self.splitViewController?.viewControllers.first as? UINavigationController)?.topViewController as? MasterViewController)?.insertNewObject(self)
-        
-        
-        
+
     }
     
     
