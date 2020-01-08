@@ -78,6 +78,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         }
     }
+    
+    @IBAction func backFromDetail(segue: UIStoryboardSegue) {
+        print("back")
+    }
+    
 
     // MARK: - Table View
 
